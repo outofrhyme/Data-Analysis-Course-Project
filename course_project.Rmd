@@ -1,0 +1,49 @@
+---
+title: "Gender Trends in Baby Names"
+date: "October 18, 2014"
+output:
+  html_document:
+    theme: cerulean
+---
+
+<!-- For more info on RMarkdown see http://rmarkdown.rstudio.com/ -->
+
+<!-- Enter the code required to load your data in the space below. The data will be loaded but the line of code won't show up in your write up (echo=FALSE) in order to save space-->
+```{r echo=FALSE}
+
+```
+
+<!-- In the remainder of the document, add R code chunks as needed -->
+
+### Introduction:
+
+This study seeks to explore the relationship between the popularity of baby names and the sex of the child. Are children of one sex or the other more likely to receive a "popular" (top 100) name?
+
+**Background**
+I am a first time parent expecting my first child, and part of that process is choosing a name. As I explored names for both genders, I was immediately struck that girl name choices seemed to have a wider spread, while boy name choices seemed to be more concentrated. Looking at the popularity of the top names for each gender, it seemed that more boys than girls were given a name in the top 100 each year.
+
+**Hypothesis**
+In the United States, the likelihood parents choosing a name in the top 100 for that year depends on their child's sex.
+
+### Data:
+
+The United States Social Security Administration records the names given to baby girls and baby boys each year, based on Social Security card applications for births that occurred in the United States after 1879. For each year, the SSA supplies a file containing the name, sex, and number of babies given that name in that year. [The SSA provides the following qualifications](http://www.ssa.gov/oact/babynames/background.html):
+* Names are restricted to cases where the year of birth, sex, State of birth (50 States and District of Columbia) are on record, and where the given name is at least 2 characters long.
+* Name data are not edited. For example, the sex associated with a name may be incorrect. Entries such as "Unknown" and "Baby" are not removed from the lists.
+* Different spellings of similar names are not combined. For example, the names Caitlin, Caitlyn, Kaitlin, Kaitlyn, Kaitlynn, Katelyn, and Katelynn are considered separate names and each has its own rank.
+
+All name data are available for download by year directly from the [Social Security Administration website](http://www.ssa.gov/oact/babynames/limits.html). After obtaining the annual data for years 1994-2013, I combined the data into a single dataframe showing the names, the number of observations by year, and the rank by year.
+
+I then used this data to create a second dataframe with a row for each year and sex, describing the total number of babies and the number with a name ranked 100 or lower.
+
+### Exploratory data analysis:
+
+Insert exploratory data analysis here...
+
+### Inference:
+
+Insert inference section here...
+
+### Conclusion:
+
+Insert conclusion here...

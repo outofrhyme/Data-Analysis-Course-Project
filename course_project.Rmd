@@ -1,6 +1,6 @@
 ---
-title: "Gender Trends in Baby Names"
-date: "October 18, 2014"
+title: "Gender Trends in Baby Name Popularity"
+date: "October 20, 2014"
 output:
   html_document:
     theme: cerulean
@@ -10,40 +10,145 @@ output:
 
 <!-- Enter the code required to load your data in the space below. The data will be loaded but the line of code won't show up in your write up (echo=FALSE) in order to save space-->
 ```{r echo=FALSE}
-
+load('BabiesTop100.Rda')
+load('BabyNames.Rda')
 ```
 
 <!-- In the remainder of the document, add R code chunks as needed -->
 
-### Introduction:
+### Introduction
 
-This study seeks to explore the relationship between the popularity of baby names and the sex of the child. Are children of one sex or the other more likely to receive a "popular" (top 100) name?
+This study seeks to explore the relationship between the popularity of baby names and the sex of the child.
 
-**Background**
-I am a first time parent expecting my first child, and part of that process is choosing a name. As I explored names for both genders, I was immediately struck that girl name choices seemed to have a wider spread, while boy name choices seemed to be more concentrated. Looking at the popularity of the top names for each gender, it seemed that more boys than girls were given a name in the top 100 each year.
+**Research Question:**
+Over the past 20 years, are US children of one sex or the other more likely to receive a "popular" name? In other words, does the choice of a popular name depend on the sex of the child?
 
-**Hypothesis**
-In the United States, the likelihood parents choosing a name in the top 100 for that year depends on their child's sex.
+**Background:**
+I am expecting my first child, and part of that process is choosing a name. As I explored names for both genders, I noticed that girl name choices seemed to have a wider spread, while boy name choices seemed to be more concentrated. Looking at the popularity of the top names for each gender, it seemed that more boys than girls were given a name in the top 100 each year. This could suggest that in the United States, we name children differently depending on whether they are male or female, with boys getting more "popular" names than girls. The purpose of this study isn't to examine why we might treat boys or girls differently, but simply to establish whether a trend exists.
 
-### Data:
+**Hypotheses:**
+There are two ways we might consider the popularity of baby names. First is by rank. A name with a higher rank is "less popular" than a name with a lower rank. If there is a difference in baby name popularity for boys and girls, then one gender should have a higher median rank. Second, we can examine the percentage of babies each year who were given a name in the top 100 baby names for that year.
 
+I hypothesize that baby girls, overall, receive names that are "less popular":
+
+1. In the United States in 2013, girl names have a higher median rank (e.g. lower popularity).
+2. In the United States over the past 20 years, parents are less likely to choose a top 100 name for baby girls than for baby boys.
+
+### Data
+
+**Data Source:**
+The United States Social Security Administration National Data, 1994-2013. Available at: http://www.ssa.gov/oact/babynames/limits.html
+
+**Data Collection:**
 The United States Social Security Administration records the names given to baby girls and baby boys each year, based on Social Security card applications for births that occurred in the United States after 1879. For each year, the SSA supplies a file containing the name, sex, and number of babies given that name in that year. [The SSA provides the following qualifications](http://www.ssa.gov/oact/babynames/background.html):
+
 * Names are restricted to cases where the year of birth, sex, State of birth (50 States and District of Columbia) are on record, and where the given name is at least 2 characters long.
+
 * Name data are not edited. For example, the sex associated with a name may be incorrect. Entries such as "Unknown" and "Baby" are not removed from the lists.
+
 * Different spellings of similar names are not combined. For example, the names Caitlin, Caitlyn, Kaitlin, Kaitlyn, Kaitlynn, Katelyn, and Katelynn are considered separate names and each has its own rank.
 
-All name data are available for download by year directly from the [Social Security Administration website](http://www.ssa.gov/oact/babynames/limits.html). After obtaining the annual data for years 1994-2013, I combined the data into a single dataframe showing the names, the number of observations by year, and the rank by year.
+**Data Transformation:**
+After obtaining the annual data for years 1994-2013, I combined the data into a [single dataframe](https://github.com/outofrhyme/Data-Analysis-Course-Project/blob/master/BabyNames.Rda) showing the names, the number of observations by year, and the rank by year. Each row (case) reflects the occurrences of a single name, with separate rows for names that are present for both genders.
 
-I then used this data to create a second dataframe with a row for each year and sex, describing the total number of babies and the number with a name ranked 100 or lower.
+I then used this data to create a [second dataframe](https://github.com/outofrhyme/Data-Analysis-Course-Project/blob/master/BabiesTop100.Rda) with a row (case) for each year and sex, describing the total number of babies and the number with a name ranked 100 or lower.
 
-### Exploratory data analysis:
+**Study Details:**
+In this study, I am exploring the relationship between sex (categorical) and name frequency (numeric). This is an observational study. No experimental groups were defined, and the data were collected via a 100% sample of all Social Security applications after they had occurred. The population of interest is all babies born and named in the United States.
 
-Insert exploratory data analysis here...
+**Scope of Inference:**
+The findings can be generalized to babies that have social security cards. There may be populations of babies within the United States who are not included and for whom the findings will not apply, which are any populations of babies whose parents did not apply for a social security card.
+
+In the United States, social security cards are required to claim a child as a dependent for tax benefits, as well as for a variety of other purposes including school and work. For this reason it is difficult to get by without a social security card, but it is not illegal. Certain populations of parents who are distrustful of the government opt out of obtaining a social security card and number for their child. This includes parents with philosophical objections to the social security program, and possibly other populations as well, such as illegal immigrants.
+
+Because the sample reflects 100% of the social security card applications each year by birth, there is no selection bias and the results can be generalized to the population of babies in the United States who have social security cards. However, there may be some bias that prevents generalizing the results to all babies in the United States, including those who do not have social security cards.
+
+In general, an experimental study is needed to prove causality, and this is merely an observational study. However, because sex is identified before the name is assigned and is independent, it is not possible for the name to be influencing the sex. Similarly, because sex is randomly "assigned," it is unlikely that a third variable is influencing name choice.
+
+But, it is not impossible that a third confounding variable might impact both sex and name choice. For example, it is possible that male and female babies might be aborted at different rates in the United States. It is also possible that there may be some demographic differences, for example the children of older men are more likely to be female. These differences could confound the relationship between sex and the choice of a popular name.
+
+### Exploratory data analysis
+
+As I mentioned in the Introduction, there are two ways we might evaluate whether girls are receiving less popular names than boys. I will start with the second method, which is the percentage of girls vs. boys who receive a "popular" name (e.g. in the top 100) each year. We can see at a glance that over the past 20 years, on average 39.5% of girls born have received one of the top 100 most popular girl names, while on average 52.6% of boys have received one of the top 100 most popular boy names.
+
+```{r}
+by(BabiesTop100$Percentage, BabiesTop100$Sex, mean)
+```
+
+We see the same trend when we plot the annual data, too:
+
+```{r}
+with(BabiesTop100, plot(Year, Percentage, type='n', xaxt='n', main='Percentage of Babies with Top 100 Name'))
+with(subset(BabiesTop100, Sex == 'M'), lines(Year, Percentage, col = 'blue'))
+with(subset(BabiesTop100, Sex == 'F'), lines(Year, Percentage, col = 'red'))
+axis(side=1, at=seq(1994, 2013, by=2))
+legend('topright', lwd = '1', col = c('blue', 'red'), 
+       legend = c('Boys','Girls'))
+```
+
+It appears that the percentage of all babies with a top 100 name has been falling over the past 20 years for both sexes. But, the percentage of girls with a top 100 name appears to be much lower than that of boys for each year in the study.
+
+If parents are less likely to choose a top 100 name for a baby girl, what names are they choosing instead? I suspect that they are choosing from a wider, more diverse pool of names, which means that the typical girl name will be less popular than the typical boy name. If this is true, then the median rank for girl names should be higher than the median rank for boy names, meaning that the median girl name is "less popular" than the median boy name.
+
+```{r}
+by(BabyNames$Rank.1994, BabyNames$Sex, median, na.rm=TRUE)
+by(BabyNames$Rank.2013, BabyNames$Sex, median, na.rm=TRUE)
+```
+
+In 1994, the median name rank for boys was 5107, and for girls, 7598. By 2013, the median name rank for boys was 6951, and for girls, 9543. The median rank for girl names is consistently higher than for boys, demonstrating that parents choose from a wider range of names for girls. Just as we saw in the plot above for the top 100 names, the medians for both genders has increased over the past 20 years, indicating that parents are choosing from a wider selection of names for both genders. However, both in 1994 and in 2013, the median girl name was indeed "less popular" (e.g. had a higher rank) than the median boy name.
 
 ### Inference:
 
-Insert inference section here...
+As stated in the introduction, I suspect that parents give girls "less popular" names, with two results:
 
-### Conclusion:
+1. In the United States in 2013, girl names have a higher median rank (e.g. lower popularity).
+2. In the United States over the past 20 years, parents are less likely to choose a top 100 name for baby girls than for baby boys.
 
-Insert conclusion here...
+**#1: In 2013, girl names have a higher median rank than boy names.**
+
+The first hypothesis can be tested by taking a sample of names used in 2013 and comparing the medians with a simulation. The Central Limit Theorem applies because I am taking a sample without replacement that is smaller than 10% of the total list of names, so the sampled data can be assumed to be independent, and I am taking a total of 100 names (50 of each gender), so the sample size requirement is met. I am using a one-sided hypothesis test because my hypothesis is that the median rank for female names will be higher than the median rank for male names. Because we are examining one numerical variable (rank) and one categorical variable (sex of the child), we need to perform a hypothesis test only. The following inference calculations run a simulation to test the hypothesis with a 95% confidence interval:
+
+```{r}
+## Restrict to year 2013
+BabyNames2013 <- BabyNames[, c('Name', 'Sex', 'Num.2013', 'Rank.2013')]
+BabyNames2013 <- BabyNames2013[complete.cases(BabyNames2013),]
+
+## Create sample with 50 female and 50 male names
+Sample2013 <- BabyNames2013[sample(1:nrow(BabyNames2013[BabyNames2013$Sex == "F",]), 50, replace = FALSE),]
+Sample2013 <- rbind(Sample2013,BabyNames2013[sample(1:nrow(BabyNames2013[BabyNames2013$Sex == "M",]), 50, replace = FALSE),])
+
+## Run inference on sample
+source("http://bit.ly/dasi_inference")
+inference(Sample2013$Rank.2013, Sample2013$Sex, est = 'median', type = 'ht', method = 'simulation', null = 0, alternative = 'greater')
+```
+
+The p-value of 0.0123 indicates that if the median rank were the same for male and female names, there is only a 1% chance of obtaining the test results. Since the p-value is less than .05, we can discard the null hypothesis and confirm the alternative hypothesis that female names have a higher median rank than male names. This means that girls are receiving "less popular" names overall.
+
+**#2: Over the past 20 years, fewer girls than boys received names in the top 100.**
+
+For the second hypothesis, the null hypothesis is that the difference in average percentages for boys and girls is 0. The alternative hypothesis is that the average percentage of girls with a top 100 name is less than the average percentage of boys with a top 100 name. Because we are examining one numerical variable (percentage of children with names in the top 100) and one categorical variable (sex of the child), we need to perform a hypothesis test only. Since the analysis data reflects summary information about all babies registered with the Social Security Administration, we can assume that more than 10% of babies are reflected, and so the central limit theorem does not apply. For this reason, I am using the simulation method with a one-sided hypothesis test at a 95% confidence interval.
+
+```{r}
+source("http://bit.ly/dasi_inference")
+inference(BabiesTop100$Percentage, BabiesTop100$Sex, est = 'mean', type = 'ht', method = 'simulation', null = 0, alternative = 'less', inf_plot = FALSE)
+```
+
+The p-value describes the likelihood of the observed results if the null hypothesis is true. In fact, the p-value is essentially 0, confirming that the null hypothesis can be rejected and the alternative hypothesis appears to be true, and parents are consistently less likely to choose a popular name for baby girls than for baby boys.
+
+### Conclusion
+
+Based on the results of the study, it appears that parents do name boys and girls differently with girls receiving less popular names, leading to further questions: What drives parents to give more boys names in the top 100, and to choose more diverse names for girls? What are the other ways that parents treat boys and girls differently? It is interesting that in the exploratory analysis, the percentage of girls given a popular name seems to be stabilizing just below 35% since 2008, while the percentage of boys given a popular name has continued to fall; why are the trends for boys moving towards the trends for girls, and will the rates eventually converge? As a society, are we trying to treat boys and girls more similarly, and trying to assign "less popular", more "unique" names for both genders? Why?
+
+I was pondering these results while at a public event, and I started to observe how parents seem to dress their children differently by gender. Nearly every female child that I saw was wearing some piece of clothing that would not be worn by a male child and clearly identified her as female: a dress, a decorative hairpiece, or the color pink. Gender equality is a major issue in the United States, yet there is evidence that we treat men and women differently from the time they are born.
+
+### Appendix
+
+**First 20 rows of BabyNames Data Frame**
+```{r}
+print.data.frame(BabyNames[1:20,])
+```
+
+**BabiesTop100 Data Frame**
+```{r}
+print.data.frame(BabiesTop100)
+```
